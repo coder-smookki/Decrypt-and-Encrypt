@@ -54,7 +54,7 @@ The project consists of encrypting and decrypting a file using a generated or ex
 
 > > decrypt.ico (The icon of the decrypt button) 
 
-> > encrypt.ico (The icon of the encrypt button
+> > encrypt.ico (The icon of the encrypt button)
 
 > > icon.ico (Application Icon)
 > > > UI
