@@ -45,3 +45,26 @@ The project consists of encrypting and decrypting a file using a generated or ex
 - :heavy_dollar_sign: Convenient for anonymous individuals who are hiding something important
 
 ---
+
+> File Cryptographer
+
+> > File Cryptographer.exe (Running the program with the permission of the exe application)
+
+> Files
+
+> > decrypt.ico (The icon of the decrypt button) 
+
+> > encrypt.ico (The icon of the encrypt button
+
+> > icon.ico (Application Icon)
+> > > UI
+
+> > > > about.py (The design ABOUT ME is written in code)
+
+> > > > about.ui (Design ABOUT ME in ui format)
+
+> > > > design.py (The design of the APPLICATION is written in code)
+
+> > > > design.ui (APPLICATION design in UI format)
+
+> File Cryptographer.py (The main code by which the program works)
