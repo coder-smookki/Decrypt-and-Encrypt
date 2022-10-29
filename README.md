@@ -50,13 +50,14 @@ The project consists of encrypting and decrypting a file using a generated or ex
 
 > > File Cryptographer.exe (Running the program with the permission of the exe application)
 
-> Files
+> DesignProgramm
 
 > > decrypt.ico (The icon of the decrypt button) 
 
 > > encrypt.ico (The icon of the encrypt button)
 
 > > icon.ico (Application Icon)
+
 > > > UI
 
 > > > > about.py (The design ABOUT ME is written in code)
@@ -68,3 +69,11 @@ The project consists of encrypting and decrypting a file using a generated or ex
 > > > > design.ui (APPLICATION design in UI format)
 
 > File Cryptographer.py (The main code by which the program works)
+
+> key.db (This is an SQL database where the generated keys are stored)
+
+> keysss.txt (A text file where the generated keys are saved)
+
+> requirements.txt (File for quick download of all libraries used in the project)
+
+> Decrypt and Ecrypt.pptx (Presentation for the presentation of the project)
