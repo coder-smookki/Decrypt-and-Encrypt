@@ -8,15 +8,18 @@
 # import random - Библиотека, которая реализует генератор псевдослучайных чисел.
 # import string - Библиотека, которая делает общие операции со строками.
 # import sys - Библиотека, которая предоставляет доступ к некоторым переменным, используемым или поддерживаемым
+# import sqlite3 - Библиотека присваевания БД
 # from itertools import cycle - Модуль itertools стандартизирует основной набор быстрых эффективных инструментов. \
 # Итератор cycle примером является данный способ cycle('ABCD') --> A B C D A B C D ...
 # from PyQt6.QtCore import Qt - Библиотека для создания приложений с графическим интерфейсом с помощью инструментария Qt
+
 
 import os
 import webbrowser
 import random
 import string
 import sys
+import sqlite3
 from itertools import cycle
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QAction, QIcon, QPixmap, QFont
@@ -91,39 +94,47 @@ class AboutDialog(QDialog):
 
 
 class Cryptographer:
-    # Функция cryptography принимает fileName (Файл который нужно обработать, newName (Файл который будет обработан)
-    # и ключ, который будет символы кодировать в байты например \xb9\xd1\x82\
+    # Открывает файл, читает его, зашифровывает по ключу, сохраняет новым файлом.
     def cryptography(self, fileName, newName, key: bytes):
-        # Открываем файл и читаем его, сохраняя прочитанное в переменную data
         with open(fileName, 'rb') as file:
             data = file.read()
 
-        # Переменная cryptographed содержит алгоритм зашифровки полученного с файла, который состоит из файла и ключа
-        cryptographed = self.xor(data, key)
+        cryptographed = self.alghorythm(data, key)
 
-        # Открываем файл, где зашифровка и меняем файл по алгоритму переменной cryptographed
         with open(newName, 'wb') as file:
             file.write(cryptographed)
 
     # Используется для создания метода, который ничего не знает о классе или экземпляре, через который он был вызван.
     @staticmethod
-    def generate_key(key_name):  # Происходит момент генерации ключа по заданным функциям библиотеки string
-        strings = string.ascii_letters + string.digits + \
-                  string.hexdigits + string.ascii_uppercase + string.punctuation
+    # Функция по генерации ключа и добавление его в БД, добавление в txt и вывод в консоль
+    def generate_key(key_name):
+        strings = string.ascii_letters + string.digits + string.hexdigits + string.ascii_uppercase
         key = ''.join(random.sample(strings, 50)).encode()
-
-        # Открывается файл с ключом и туда идёт запись ключа
         with open(key_name, 'wb') as keyFile:
             keyFile.write(key)
+        with open('keysss.txt', 'a') as keyss:
+            keyss.write(str(key) + '\n')
+        con = sqlite3.connect('key.db')
+        cur = con.cursor()
+        reg = f'INSERT INTO keys (key) VALUES' \
+              f'("{key}")'
+        con.execute(reg).fetchall()
+        cur.execute("SELECT * FROM keys")
+        for row in cur.fetchall():
+            print(row)
+        con.commit()
+        con.close()
 
+    # Идёт загрузка существующего ключа
     @staticmethod
-    def load_key(key_name):  # Идёт загрузка существующего ключа
+    def load_key(key_name):
         with open(key_name, 'rb') as keyFile:
             key = keyFile.read()
         return key
 
+    # Алгоритм закодированния файла (по принципу известного хакера (Рафаэля Херцога)
     @staticmethod
-    def xor(data, key):  # Алгоритм закодированния файла (по принципу известного хакера (Рафаэля Херцога)
+    def alghorythm(data, key):
         return bytes(a ^ b for a, b in zip(data, cycle(key)))
 
 
@@ -224,7 +235,8 @@ class Widget(QMainWindow):
 
         self.init_menu()
 
-    def encrypt(self):  # Кнопка зашифровки файла
+    # Кнопка зашифровки файла
+    def encrypt(self):
         if self.key:
             file_path = self.file_path_line_encoder_tab.text()
 
@@ -244,7 +256,8 @@ class Widget(QMainWindow):
             QMessageBox.critical(
                 self, 'ОШИБКА', '\nПожалуйста, сначала загрузите КЛЮЧ!\t\n')
 
-    def decrypt(self):  # Кнопка расшифровки файла
+    # Кнопка расшифровки файла
+    def decrypt(self):
         if self.key:
             file_path = self.file_path_line_decoder_tab.text()
 
@@ -263,7 +276,8 @@ class Widget(QMainWindow):
             QMessageBox.critical(
                 self, 'ОШИБКА', '\nПожалуйста, сначала загрузите КЛЮЧ!\t\n')
 
-    def load_key(self):  # Кнопка загрузка ключа по которому будет происходит зашифрование | расшифрование
+    # Кнопка загрузка ключа по которому будет происходит зашифрование | расшифрование
+    def load_key(self):
         key_path, _ = QFileDialog.getOpenFileName(
             self, 'Открыть ключ файл', '', "Ключ файлы (*.key)")
 
@@ -272,25 +286,29 @@ class Widget(QMainWindow):
             self.selected_key_lbl_key_frame.setText(f'КЛЮЧ:  {key_name}')
             self.key = self.cryptographer.load_key(key_path)
 
-    def generate_key(self):  # Кнопка генерации особого ключа по которому будет происходит  зашифрование | расшифрование
+    # Кнопка генерации особого ключа по которому будет происходит  зашифрование | расшифрование
+    def generate_key(self):
         key_path, _ = QFileDialog.getSaveFileName(
             self, 'Сохранить ключ файл', '', "Ключ файлы (*.key)")
 
         if key_path:
             self.cryptographer.generate_key(key_path)
 
-    def open_encode_file(self):  # Открытие файла для расшифровки
+    # Открытие файла для расшифровки
+    def open_encode_file(self):
         file_path, _ = QFileDialog.getOpenFileName(self, 'Открыть файл')
         if file_path:
             self.file_path_line_encoder_tab.setText(file_path)
 
-    def open_decode_file(self):  # Открытие файла для зашифровки
+    # Открытие файла для зашифровки
+    def open_decode_file(self):
         file_path, _ = QFileDialog.getOpenFileName(
             self, 'Открыть файл', '', "Шифрование файлов (*.encrypt)")
         if file_path:
             self.file_path_line_decoder_tab.setText(file_path)
 
-    def init_menu(self):  # Дополнительные кнопки о ПОМОЩИ и ОБО МНЕ
+    # Дополнительные кнопки о ПОМОЩИ и ОБО МНЕ
+    def init_menu(self):
         helpAction = QAction("Помощь", self)
         helpAction.triggered.connect(
             lambda: QMessageBox.information(self, 'Помощь', HELP_MESSAGE))
@@ -303,14 +321,15 @@ class Widget(QMainWindow):
         menu.addAction(aboutAction)
 
 
-HELP_MESSAGE = '''
+# Текст который выводится в диалоговом окне "Помощь"
+HELP_MESSAGE = ''' 
 1) Загрузите ключ (если у вас нет никакого ключа, сгенерируйте ключ, а затем загрузите его).
 2) Откройте файл для шифрования или дешифрования.
 3) Нажмите кнопку зашифровать/расшифровать и выберите путь сохранения.
 4) Теперь ваш файл готов!
 
 
-(Алгоритм был придуман Рафаэлем Херцогом - известным от ныне хакера который смог взломать базу данных крупного банка с помощью лазейки Брауманга по API запросу с помощью мощного ядра С++. )
+(Алгоритм был придуман Рафаэлем Херцогом - известным хакером который смог взломать базу данных крупного банка с помощью лазейки Брауманга по API запросу и мощного ядра С++)
 '''
 
 if __name__ == "__main__":
