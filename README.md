@@ -45,3 +45,25 @@ The project consists of encrypting and decrypting a file using a generated or ex
 - :heavy_dollar_sign: Convenient for anonymous individuals who are hiding something important
 
 ---
+
+<h2>
+  Main Window
+</h2>
+
+![Screenshot_12](https://user-images.githubusercontent.com/102893182/212110941-1014e9f1-f414-4f6d-9bed-b9487141ea2a.png)
+
+---
+
+<h2>
+  Help Window
+</h2>
+
+![Screenshot_13](https://user-images.githubusercontent.com/102893182/212110954-eb74d986-3146-4bb3-af54-96fefd4dfb43.png)
+
+---
+
+<h2>
+  Contact with me
+</h2>
+
+![Screenshot_14](https://user-images.githubusercontent.com/102893182/212110960-41b808cf-572d-4704-bde7-a294175bbe17.png)
