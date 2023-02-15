@@ -321,13 +321,9 @@ class Widget(QMainWindow):
         aboutAction = QAction("Обо мне", self)
         aboutAction.triggered.connect(lambda: self.aboutDialog.exec())
 
-        autorezation = QAction('Авторизация', self)
-        autorezation.triggered.connect(lambda: self.loginwindow.exec())
-
         menu = self.menuBar()
         menu.addAction(helpAction)
         menu.addAction(aboutAction)
-        menu.addAction(autorezation)
 
 
 # Текст который выводится в диалоговом окне "Помощь"
