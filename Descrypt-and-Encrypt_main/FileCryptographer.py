@@ -164,17 +164,17 @@ class Widget(QMainWindow):
         key_frame.setGeometry(440, 41, 121, 120)
 
         load_key_btn_key_frame = QPushButton(key_frame)
-        load_key_btn_key_frame.setGeometry(25, 40, 80, 30)
-        load_key_btn_key_frame.setText("Load КЛЮЧ")
+        load_key_btn_key_frame.setGeometry(13, 30, 80, 40)
+        load_key_btn_key_frame.setText("Загрузить\nключ")
         load_key_btn_key_frame.clicked.connect(self.load_key)
 
         generate_key_btn_key_frame = QPushButton(key_frame)
-        generate_key_btn_key_frame.setGeometry(25, 80, 95, 30)
-        generate_key_btn_key_frame.setText("Generate КЛЮЧ")
+        generate_key_btn_key_frame.setGeometry(13, 75, 107, 42)
+        generate_key_btn_key_frame.setText("Сгенерировать\nключ")
         generate_key_btn_key_frame.clicked.connect(self.generate_key)
 
         self.selected_key_lbl_key_frame = QLabel(key_frame)
-        self.selected_key_lbl_key_frame.setGeometry(25, 10, 100, 20)
+        self.selected_key_lbl_key_frame.setGeometry(13, 0, 100, 20)
         self.selected_key_lbl_key_frame.setText("КЛЮЧ: ")
 
         lineEdit_font = QFont()
@@ -190,12 +190,12 @@ class Widget(QMainWindow):
         encoderTab = QWidget()
 
         open_file_btn_encoderTab = QPushButton(encoderTab)
-        open_file_btn_encoderTab.setGeometry(290, 20, 90, 31)
+        open_file_btn_encoderTab.setGeometry(290, 20, 100, 31)
         open_file_btn_encoderTab.setText("Открыть файл")
         open_file_btn_encoderTab.clicked.connect(self.open_encode_file)
 
         encode_btn_encoderTab = QPushButton(encoderTab)
-        encode_btn_encoderTab.setGeometry(290, 60, 90, 31)
+        encode_btn_encoderTab.setGeometry(290, 60, 100, 31)
         encode_btn_encoderTab.setText("Зашифровать")
         encode_btn_encoderTab.clicked.connect(self.encrypt)
 
@@ -211,12 +211,12 @@ class Widget(QMainWindow):
         decoderTab = QWidget()
 
         open_file_btn_decoderTab = QPushButton(decoderTab)
-        open_file_btn_decoderTab.setGeometry(290, 20, 90, 31)
+        open_file_btn_decoderTab.setGeometry(290, 20, 100, 31)
         open_file_btn_decoderTab.setText("Открыть файл")
         open_file_btn_decoderTab.clicked.connect(self.open_decode_file)
 
         decode_btn_decoderTab = QPushButton(decoderTab)
-        decode_btn_decoderTab.setGeometry(290, 60, 90, 31)
+        decode_btn_decoderTab.setGeometry(290, 60, 100, 31)
         decode_btn_decoderTab.setText("Расшифровать")
         decode_btn_decoderTab.clicked.connect(self.decrypt)
 
@@ -326,15 +326,16 @@ class Widget(QMainWindow):
         menu.addAction(aboutAction)
 
 
-# Текст который выводится в диалоговом окне "Помощь"
+# Текст, который выводится в диалоговом окне "Помощь"
 HELP_MESSAGE = ''' 
-1) Загрузите ключ (если у вас нет никакого ключа, сгенерируйте ключ, а затем загрузите его).
+1) Загрузите ключ. (Если у вас отсутствует ключ, пожалуйста, сгенерируйте его, а затем выполните его загрузку.)
 2) Откройте файл для шифрования или дешифрования.
 3) Нажмите кнопку зашифровать/расшифровать и выберите путь сохранения.
 4) Теперь ваш файл готов!
+5) Вы прекрасны!
 
 
-(Алгоритм был придуман Рафаэлем Херцогом - известным хакером который смог взломать базу данных крупного банка с помощью лазейки Брауманга по API запросу и мощного ядра С++)
+(Алгоритм был придуман Рафаэлем Херцогом - известным хакером который смог взломать базу данных Интерпола с помощью лазейки Брауманга по API запросу и мощного ядра С++)
 '''
 
 if __name__ == "__main__":
